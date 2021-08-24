@@ -3,10 +3,11 @@
     <div class="col-md-6">
         <div class="card shadow p-3 my-5  rounded" >
         <h3 class="my-5"> {{ title | uppercase}} </h3>
-        <form #form="ngForm" (ngSubmit)="onSubmit(form)" >
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" >
             <div class="form-floating mb-3">
-                <input ngModel required #email="ngModel" name="email"  type="email"  
+                <input name="email"  type="email"  
                 id="email"
+                formControlName="email"
                 class="form-control"
                 >
                  <label for="email">Email address</label>
@@ -20,7 +21,8 @@
             </div>
 
             <div class="form-floating">
-                <input type="password" minlength="4" #password='ngModel' required ngModel name="password" class="form-control" id="password" >
+                <input type="password"
+                formControlName="password" name="password" class="form-control" id="password" >
                 <label for="password">Password</label>
 
             </div>
@@ -32,7 +34,12 @@
                 </div>
                 <div *ngIf="password.errors?.minlength">
                     <p class="text-danger">password must be at least {{ password.errors?.minlength.requiredLength}} characters long.</p>
-                </div>                
+                </div>   
+            <div *ngIf="password.errors?.maxlength">
+                <p class="text-danger">
+                    Password must be {{ password.errors?.maxlength.requiredLength}} characters long.
+                </p>
+            </div>
             </div>
             {{form.value | json }} <br>
             <button type="submit" [disabled]="!form.valid" class="btn btn-primary btn-lg my-4">Sign in</button>
