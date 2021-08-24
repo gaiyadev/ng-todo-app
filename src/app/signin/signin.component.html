@@ -3,16 +3,39 @@
     <div class="col-md-6">
         <div class="card shadow p-3 my-5  rounded" >
         <h3 class="my-5"> {{ title | uppercase}} </h3>
-        <form>
+        <form #form="ngForm" (ngSubmit)="onSubmit(form)" >
             <div class="form-floating mb-3">
-                <input type="email" class="form-control" id="email" placeholder="name@example.com">
-                <label for="email">Email address</label>
+                <input ngModel required #email="ngModel" name="email"  type="email"  
+                id="email"
+                class="form-control"
+                >
+                 <label for="email">Email address</label>
             </div>
+
+            <div *ngIf="email.invalid && (email.dirty || email.touched)">
+            
+                <div *ngIf="email.errors?.required">
+                    <p class="text-danger">Email address is required.</p>
+                </div>                            
+            </div>
+
             <div class="form-floating">
-                <input type="password" class="form-control" id="password" placeholder="Password">
+                <input type="password" minlength="4" #password='ngModel' required ngModel name="password" class="form-control" id="password" >
                 <label for="password">Password</label>
+
             </div>
-            <button type="submit" class="btn btn-primary btn-lg my-4">Sign in</button>
+
+            <div *ngIf="password.invalid && (password.dirty || password.touched)">
+            
+                <div *ngIf="password.errors?.required">
+                    <p class="text-danger">Password is required.</p>
+                </div>
+                <div *ngIf="password.errors?.minlength">
+                    <p class="text-danger">password must be at least {{ password.errors?.minlength.requiredLength}} characters long.</p>
+                </div>                
+            </div>
+            {{form.value | json }} <br>
+            <button type="submit" [disabled]="!form.valid" class="btn btn-primary btn-lg my-4">Sign in</button>
         </form>
       </div>
 

@@ -12,4 +12,5 @@ export class SignupComponent implements OnInit {
   ngOnInit(): void {
   }
   title = 'Sign up'
+  onSubmit(form: any) { console.log(form) }
 }

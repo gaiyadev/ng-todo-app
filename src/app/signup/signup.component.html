@@ -3,22 +3,51 @@
     <div class="col-md-6">
     <div class="card shadow p-3 my-5  rounded">
         <h3 class="my-5"> {{ title | uppercase}} </h3>
-        <form>
+        <form #form="ngForm" (ngSubmit)="onSubmit(form)">
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="username" >
+                <input type="text" minlength="3" required ngModel name="username" #username="ngModel" class="form-control" id="username" >
                 <label for="username">username</label>
             </div>
+            <!--  -->
+            <div *ngIf="username.invalid && (username.dirty || username.touched)">
+                <div *ngIf="username.errors?.required">
+                    <p class="text-danger">Username is required.</p>
+                </div>
+                <div *ngIf="username.errors?.minlength">
+                    <p class="text-danger">Username must be at least {{ username.errors?.minlength.requiredLength}} characters long.
+                    </p>
+                </div>
+            </div>
+            <!-- / -->
 
             <div class="form-floating mb-3">
-                <input type="email" class="form-control" id="email">
+                <input ngModel #email='ngModel' required name="email" type="email" class="form-control" id="email">
                 <label for="email">Email address</label>
             </div>
-
+            <!--  -->
+            <div *ngIf="email.invalid && (email.dirty || email.touched)">
+            
+                <div *ngIf="email.errors?.required">
+                    <p class="text-danger">Email address is required.</p>
+                </div>
+            </div>
+            <!-- / -->
             <div class="form-floating">
-                <input type="password" class="form-control" id="password" placeholder="Password">
+                <input type="password" #password="ngModel" name="password" ngModel class="form-control" id="password" placeholder="Password">
                 <label for="password">Password</label>
             </div>
-            <button type="submit" class="btn btn-primary btn-lg my-4">Sign up</button>
+            <div *ngIf="password.invalid && (password.dirty || password.touched)">
+            
+                <div *ngIf="password.errors?.required">
+                    <p class="text-danger">Password is required.</p>
+                </div>
+                <div *ngIf="password.errors?.minlength">
+                    <p class="text-danger">password must be at least {{ password.errors?.minlength.requiredLength}} characters long.
+                    </p>
+                </div>
+            </div>
+            {{form.value | json }} <br>
+            <button type="submit" [disabled]="!form.valid" class="btn btn-primary btn-lg my-4">Sign up</button>
         </form>
      </div>
     </div>

@@ -11,5 +11,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  title = "Home Page"
+  title = "All blog posts"
+  subTitle = "Latest news"
 }
