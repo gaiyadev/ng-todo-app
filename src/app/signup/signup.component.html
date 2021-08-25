@@ -13,6 +13,9 @@
                 id="username" >
                 <label for="username">username</label>
             </div>
+            <!-- loader -->
+            <div *ngIf="username.pending" >checking</div>
+            <!-- /loader -->
             <!--  -->
             <div *ngIf="username.invalid && (username.dirty || username.touched)">
                 <div *ngIf="username.errors?.required">
@@ -26,6 +29,17 @@
             <div *ngIf="username.errors?.maxlength">
                 <p class="text-danger">
                     Username must below {{ username.errors?.maxlength.requiredLength}} characters long.
+                </p>
+            </div> 
+            
+            <div *ngIf="username.errors?.cannotContainSpace">
+                <p class="text-danger">
+                    Username cannot contain space
+                </p>
+            </div>
+             <div *ngIf="username.errors?.ShouldBeUniqueField">
+                <p class="text-danger">
+                    Username is already taken
                 </p>
             </div>
             </div>
@@ -42,6 +56,15 @@
                 <div *ngIf="email.errors?.required">
                     <p class="text-danger">Email address is required.</p>
                 </div>
+                <div *ngIf="email.errors?.email">
+                    <p class="text-danger">Email address is not valid.</p>
+                </div>
+            </div>
+
+            <div *ngIf="email.errors?.cannotContainSpace">
+                <p class="text-danger">
+                    email cannot contain space
+                </p>
             </div>
             <!-- / -->
             <div class="form-floating">
@@ -63,6 +86,11 @@
             <div *ngIf="password.errors?.maxlength">
                 <p class="text-danger">
                     Password must be  {{ password.errors?.maxlength.requiredLength}} characters long.
+                </p>
+            </div>
+            <div *ngIf="password.errors?.cannotContainSpace">
+                <p class="text-danger">
+                    Password cannot contain space
                 </p>
             </div>
             </div>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FieldValidators } from '../validators/field.validators';
 
 @Component({
   selector: 'app-signup',
@@ -12,23 +13,28 @@ export class SignupComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
   title = 'Sign up'
 
   form = new FormGroup({
     username: new FormControl('', [
       Validators.required,
       Validators.minLength(3),
-      Validators.maxLength(10)
-    ]),
+      Validators.maxLength(10),
+      FieldValidators.cannotContainSpace,
+    ],
+      FieldValidators.ShouldBeUniqueField
+    ),
     email: new FormControl('', [
       Validators.required,
-      Validators.email
+      Validators.email,
+      FieldValidators.cannotContainSpace
     ]),
     password: new FormControl('', [
       Validators.required,
       Validators.minLength(4),
-      Validators.maxLength(10)
-
+      Validators.maxLength(10),
+      FieldValidators.cannotContainSpace
     ])
   })
 
