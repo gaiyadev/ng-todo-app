@@ -12,6 +12,10 @@ import { HomeComponent } from './home/home.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from './services/auth.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { AdminComponent } from './admin/admin.component';
+import { AuthGuard } from './services/auth-guard.service';
+import { ForbiddenComponent } from './forbidden/forbidden.component';
+import { AdminAuthGuard } from './services/admin-auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -21,7 +25,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     PageNotFoundComponent,
     NavbarComponent,
     HomeComponent,
-    DashboardComponent
+    DashboardComponent,
+    AdminComponent,
+    ForbiddenComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +38,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
   ],
   providers: [
     AuthService,
-
+    AuthGuard,
+    AdminAuthGuard
   ],
   bootstrap: [AppComponent]
 })

@@ -11,13 +11,17 @@
                     <a class="nav-link active" aria-current="page" routerLink="/">Home</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" *ngIf="authService.isSignIn() && authService.CurrentUser.admin" routerLink="/admin">Admin</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link"  *ngIf="!authService.isSignIn()" routerLink="/signup">Signup</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link"  *ngIf="!authService.isSignIn()" routerLink="/signin">SignIn</a>
                 </li>  
                   <li class="nav-item">
-                    <a class="nav-link" *ngIf="authService.isSignIn()" (click)='authService.signOut()' >SignOut</a>
+                    <a class="nav-link" *ngIf="authService.isSignIn()" (click)='authService.signOut()' >SignOut </a>
+                    <span *ngIf="authService.isSignIn()"> {{ authService.CurrentUser.username }} </span>
                 </li>    
             </ul>
         </div>

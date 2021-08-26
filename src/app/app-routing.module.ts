@@ -1,8 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { AdminAuthGuard } from './services/admin-auth-guard.service';
+import { AuthGuard } from './services/auth-guard.service';
 import { SigninComponent } from './signin/signin.component';
 import { SignupComponent } from './signup/signup.component';
 
@@ -21,7 +24,17 @@ const routes: Routes = [
   },
   {
     path: 'dashboard',
-    component: DashboardComponent
+    component: DashboardComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'admin',
+    component: DashboardComponent,
+    canActivate: [AuthGuard, AdminAuthGuard]
+  },
+  {
+    path: 'forbidden',
+    component: ForbiddenComponent,
   },
   {
     path: '**',

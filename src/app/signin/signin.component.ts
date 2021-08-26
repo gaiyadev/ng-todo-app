@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AppError } from '../common/app.error';
 import { BadRequestError } from '../common/bad-request.error';
 import { NetWorkError } from '../common/network.error';
@@ -14,7 +15,9 @@ import { AuthService } from '../services/auth.service';
 })
 export class SigninComponent implements OnInit {
 
-  constructor(private authService: AuthService) { }
+  constructor(private router: Router,
+    private route: ActivatedRoute,
+    private authService: AuthService) { }
 
   ngOnInit(): void {
   }
@@ -57,7 +60,7 @@ export class SigninComponent implements OnInit {
 
       const { token } = response;
       const { _id, email, username } = response.user;
-      
+
       const user = {
         _id,
         email,
@@ -68,6 +71,8 @@ export class SigninComponent implements OnInit {
       localStorage.setItem('user', JSON.stringify(user))
       this.successMsg = response.message
       // redirect
+      let returnUrl = this.route.snapshot.queryParamMap.get('returnUrl')
+      this.router.navigate([returnUrl || '/dashboard'])
     }, (error: AppError) => {
       this.loading = false
       switch (true) {

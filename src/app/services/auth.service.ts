@@ -17,6 +17,7 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   private baseUrl: String = 'https://note-expressjs-api.herokuapp.com'
+  private jwtHelper: JwtHelperService = new JwtHelperService();
 
   signUp(formData: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/api/users/register`, formData)
@@ -68,31 +69,31 @@ export class AuthService {
   }
 
   // Get Login user
-  getUser() {
+  get CurrentUser() {
+    let token: string | null = localStorage.getItem('token');
+    if (!token) return;
 
+    return this.jwtHelper.decodeToken(token)
   }
 
   // Signout
   signOut(): void {
-    localStorage.clear();
+    return localStorage.clear();
   }
 
   isSignIn() {
-    let jwtHelper: JwtHelperService = new JwtHelperService();
 
     let token: string | null = localStorage.getItem('token');
-
     if (!token) return false;
 
-    let d = jwtHelper.decodeToken(token)
-    let expiredDate = jwtHelper.getTokenExpirationDate(token)
-    let isExpired = jwtHelper.isTokenExpired(token)
+    let d = this.jwtHelper.decodeToken(token)
+    let expiredDate = this.jwtHelper.getTokenExpirationDate(token)
+    let isExpired = this.jwtHelper.isTokenExpired(token)
     console.log(expiredDate)
     console.log(isExpired)
     console.log(token)
     console.log(d)
 
-
-    return false
+    return !isExpired
   }
 }
