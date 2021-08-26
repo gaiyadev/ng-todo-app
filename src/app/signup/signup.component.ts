@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AppError } from '../common/app.error';
+import { BadRequestError } from '../common/bad-request.error';
+import { NetWorkError } from '../common/network.error';
+import { NotFoundError } from '../common/not-found.error';
+import { ServerError } from '../common/server.error';
+import { AuthService } from '../services/auth.service';
 import { FieldValidators } from '../validators/field.validators';
 
 @Component({
@@ -9,12 +15,16 @@ import { FieldValidators } from '../validators/field.validators';
 })
 export class SignupComponent implements OnInit {
 
-  constructor() { }
+  constructor(private authServe: AuthService) { }
 
   ngOnInit(): void {
   }
 
-  title = 'Sign up'
+  public title = 'Sign up'
+  public successMsg: String = ''
+  public errorMsg: String = ''
+  public loading = false
+
 
   form = new FormGroup({
     username: new FormControl('', [
@@ -50,6 +60,36 @@ export class SignupComponent implements OnInit {
 
 
   onSubmit() {
-    console.log(this.form.value)
+    this.loading = true
+    this.errorMsg = ''
+    this.successMsg = ''
+    const { username, email, password } = this.form.value
+    const data = {
+      username, email, password
+    }
+
+    this.authServe.signUp(data).subscribe(response => {
+      this.loading = false
+      this.successMsg = response.message
+    }, (error: AppError) => {
+      this.loading = false
+      switch (true) {
+        case error instanceof NotFoundError:
+          this.errorMsg = 'Not found'
+          break;
+        case error instanceof BadRequestError:
+          this.errorMsg = error.originalError
+          break
+        case error instanceof NetWorkError:
+          this.errorMsg = 'Network problem'
+          break
+        case error instanceof ServerError:
+          this.errorMsg = 'Internal server error'
+          break
+        default:
+          this.errorMsg = 'An unexpected error occured'
+          break;
+      }
+    })
   }
 }
