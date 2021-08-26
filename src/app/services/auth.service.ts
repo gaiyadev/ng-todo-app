@@ -17,7 +17,8 @@ export class AuthService {
 
   constructor(
     private router: Router,
-    private http: HttpClient) { }
+    private http: HttpClient
+  ) { }
 
   private baseUrl: String = 'https://note-expressjs-api.herokuapp.com'
   private jwtHelper: JwtHelperService = new JwtHelperService();
@@ -43,7 +44,7 @@ export class AuthService {
   }
 
   // SignIn User
-  signIn(formData: any) :Observable<any> {
+  signIn(formData: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/api/users/login`, formData)
       .pipe(
         catchError((error: Response | any): any => {
