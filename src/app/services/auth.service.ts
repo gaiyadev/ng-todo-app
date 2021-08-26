@@ -72,5 +72,11 @@ export class AuthService {
   }
 
   // Signout
-  signOut() { }
+  signOut(): void {
+    localStorage.clear();
+  }
+
+  isSignIn(): Boolean {
+    return false
+  }
 }
