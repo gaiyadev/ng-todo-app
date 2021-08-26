@@ -3,6 +3,15 @@
     <div class="col-md-6">
         <div class="card shadow p-3 my-5  rounded" >
         <h3 class="my-5"> {{ title | uppercase}} </h3>
+
+        <div class="alert alert-danger" *ngIf="errorMsg">
+            <span class="text-center">{{ errorMsg }}</span>
+        </div>
+        
+        <div class="alert alert-success" *ngIf="successMsg">
+            <span class="text-center">{{ successMsg }}</span>
+        </div>
+
         <form [formGroup]="form" (ngSubmit)="onSubmit()" >
             <div class="form-floating mb-3">
                 <input name="email"  type="email"  
@@ -41,8 +50,10 @@
                 </p>
             </div>
             </div>
-            {{form.value | json }} <br>
-            <button type="submit" [disabled]="!form.valid" class="btn btn-primary btn-lg my-4">Sign in</button>
+        <button *ngIf="loading" type="submit" [disabled]="!form.valid" class="btn btn-primary btn-lg my-4">Authenticating...
+        </button>
+        
+        <button *ngIf="!loading" type="submit" [disabled]="!form.valid" class="btn btn-primary btn-lg my-4">Sign In </button>
         </form>
       </div>
 

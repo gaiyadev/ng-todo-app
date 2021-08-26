@@ -42,7 +42,29 @@ export class AuthService {
   }
 
   // SignIn User
-  signIn() { }
+  signIn(formData: any) {
+    return this.http.post(`${this.baseUrl}/api/users/login`, formData)
+      .pipe(
+        catchError((error: Response | any): any => {
+          switch (true) {
+            case error.status === 404:
+              throw (new NotFoundError())
+            case error.status === 500:
+              throw (new ServerError())
+            case error.status === 0:
+              throw (new NetWorkError())
+            case error.status === 400:
+              throw (new BadRequestError(error.error.error))
+            default:
+              throw (new AppError(error))
+          }
+
+
+
+        })
+      )
+
+  }
 
   // Get Login user
   getUser() {

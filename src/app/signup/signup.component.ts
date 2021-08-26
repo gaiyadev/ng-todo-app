@@ -15,7 +15,7 @@ import { FieldValidators } from '../validators/field.validators';
 })
 export class SignupComponent implements OnInit {
 
-  constructor(private authServe: AuthService) { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
   }
@@ -68,7 +68,7 @@ export class SignupComponent implements OnInit {
       username, email, password
     }
 
-    this.authServe.signUp(data).subscribe(response => {
+    this.authService.signUp(data).subscribe((response: any) => {
       this.loading = false
       this.successMsg = response.message
     }, (error: AppError) => {

@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { empty } from 'rxjs';
+import { AppError } from '../common/app.error';
+import { BadRequestError } from '../common/bad-request.error';
+import { NetWorkError } from '../common/network.error';
+import { NotFoundError } from '../common/not-found.error';
+import { ServerError } from '../common/server.error';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-signin',
@@ -9,11 +14,16 @@ import { empty } from 'rxjs';
 })
 export class SigninComponent implements OnInit {
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
   }
-  title = "Sign in"
+
+  public title = "Sign in"
+  public successMsg: String = ''
+  public errorMsg: String = ''
+  public loading = false
+
   form = new FormGroup({
     email: new FormControl('', [
       Validators.required,
@@ -31,7 +41,52 @@ export class SigninComponent implements OnInit {
   get password(): any {
     return this.form.get('password')
   }
+
   onSubmit() {
-    console.log(this.form.value)
+    this.loading = true
+    this.errorMsg = ''
+    this.successMsg = ''
+
+    const { email, password } = this.form.value
+    const data = {
+      email, password
+    }
+
+    this.authService.signIn(data).subscribe((response: any) => {
+      this.loading = false
+
+      const { token } = response;
+      const { _id, email, username } = response.user;
+      
+      const user = {
+        _id,
+        email,
+        username
+      }
+
+      localStorage.setItem('token', token)
+      localStorage.setItem('user', JSON.stringify(user))
+      this.successMsg = response.message
+      // redirect
+    }, (error: AppError) => {
+      this.loading = false
+      switch (true) {
+        case error instanceof NotFoundError:
+          this.errorMsg = 'Not found'
+          break;
+        case error instanceof BadRequestError:
+          this.errorMsg = error.originalError
+          break
+        case error instanceof NetWorkError:
+          this.errorMsg = 'Network problem'
+          break
+        case error instanceof ServerError:
+          this.errorMsg = 'Internal server error'
+          break
+        default:
+          this.errorMsg = 'An error occured'
+          break;
+      }
+    })
   }
 }
