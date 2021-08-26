@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AppError } from '../common/app.error';
 import { BadRequestError } from '../common/bad-request.error';
 import { NetWorkError } from '../common/network.error';
@@ -15,7 +16,9 @@ import { FieldValidators } from '../validators/field.validators';
 })
 export class SignupComponent implements OnInit {
 
-  constructor(private authService: AuthService) { }
+  constructor(
+    private router: Router,
+    private authService: AuthService) { }
 
   ngOnInit(): void {
   }
@@ -71,11 +74,14 @@ export class SignupComponent implements OnInit {
     this.authService.signUp(data).subscribe((response: any) => {
       this.loading = false
       this.successMsg = response.message
+      setTimeout(() => {
+        this.router.navigate(['/signin'])
+      }, 2000);
     }, (error: AppError) => {
       this.loading = false
       switch (true) {
         case error instanceof NotFoundError:
-          this.errorMsg = 'Not found'
+          this.errorMsg = 'Resource not found'
           break;
         case error instanceof BadRequestError:
           this.errorMsg = error.originalError

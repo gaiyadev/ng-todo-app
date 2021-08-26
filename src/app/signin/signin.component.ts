@@ -77,7 +77,7 @@ export class SigninComponent implements OnInit {
       this.loading = false
       switch (true) {
         case error instanceof NotFoundError:
-          this.errorMsg = 'Not found'
+          this.errorMsg = 'Resource not found'
           break;
         case error instanceof BadRequestError:
           this.errorMsg = error.originalError

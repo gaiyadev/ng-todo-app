@@ -16,6 +16,7 @@ import { AdminComponent } from './admin/admin.component';
 import { AuthGuard } from './services/auth-guard.service';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { AdminAuthGuard } from './services/admin-auth-guard.service';
+import { PostComponent } from './post/post.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { AdminAuthGuard } from './services/admin-auth-guard.service';
     HomeComponent,
     DashboardComponent,
     AdminComponent,
-    ForbiddenComponent
+    ForbiddenComponent,
+    PostComponent
   ],
   imports: [
     BrowserModule,
