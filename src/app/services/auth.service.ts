@@ -21,19 +21,21 @@ export class AuthService {
     return this.http.post(`${this.baseUrl}/api/users/register`, formData)
       .pipe(
         catchError((error: Response | any): any => {
-          if (error.status === 404) {
-            throw (new NotFoundError())
+          switch (true) {
+            case error.status === 404:
+              throw (new NotFoundError())
+            case error.status === 500:
+              throw (new ServerError())
+            case error.status === 0:
+              throw (new NetWorkError())
+            case error.status === 400:
+              throw (new BadRequestError(error.error.error))
+            default:
+              throw (new AppError(error))
           }
-          else if (error.status === 500) {
-            throw (new ServerError())
-          }
-          else if (error.status === 0) {
-            throw (new NetWorkError())
-          }
-          else if (error.status === 400) {
-            throw (new BadRequestError(error.error.error))
-          }
-          throw (new AppError(error))
+
+
+
         })
       )
 

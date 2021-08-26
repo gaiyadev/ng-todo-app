@@ -87,7 +87,7 @@ export class SignupComponent implements OnInit {
           this.errorMsg = 'Internal server error'
           break
         default:
-          this.errorMsg = 'An unexpected error occured'
+          this.errorMsg = 'An error occured'
           break;
       }
     })
