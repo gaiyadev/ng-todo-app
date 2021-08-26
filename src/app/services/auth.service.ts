@@ -7,6 +7,7 @@ import { NotFoundError } from '../common/not-found.error';
 import { ServerError } from '../common/server.error';
 import { NetWorkError } from '../common/network.error';
 import { BadRequestError } from '../common/bad-request.error';
+import { JwtHelperService } from "@auth0/angular-jwt";
 
 @Injectable({
   providedIn: 'root'
@@ -76,7 +77,22 @@ export class AuthService {
     localStorage.clear();
   }
 
-  isSignIn(): Boolean {
+  isSignIn() {
+    let jwtHelper: JwtHelperService = new JwtHelperService();
+
+    let token: string | null = localStorage.getItem('token');
+
+    if (!token) return false;
+
+    let d = jwtHelper.decodeToken(token)
+    let expiredDate = jwtHelper.getTokenExpirationDate(token)
+    let isExpired = jwtHelper.isTokenExpired(token)
+    console.log(expiredDate)
+    console.log(isExpired)
+    console.log(token)
+    console.log(d)
+
+
     return false
   }
 }
