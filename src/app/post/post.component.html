@@ -1,1 +1,69 @@
-<p>post works!</p>
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class="card shadow p-3 my-5  rounded">
+            <h3 class="my-5"> {{ title1 | uppercase}} </h3>
+
+            <div class="alert alert-danger" *ngIf="errorMsg">
+                <span class="text-center">{{ errorMsg }}</span>
+            </div>
+
+            <div class="alert alert-success" *ngIf="successMsg">
+                <span class="text-center">{{ successMsg }}</span>
+            </div>
+
+            <form [formGroup]="form" (ngSubmit)="createPost()">
+                <div class="form-floating mb-3">
+                    <input name="title" type="text" id="title" formControlName="title" class="form-control">
+                    <label for="title">Title</label>
+                </div>
+
+                <div *ngIf="title.invalid && (title.dirty || title.touched)">
+
+                    <div *ngIf="title.errors?.required">
+                        <p class="text-danger">Title is required.</p>
+                    </div>
+
+                    <div *ngIf="title.errors?.minlength">
+                        <p class="text-danger">Title is must be atleast 3 char.</p>
+                    </div>
+
+                    <div *ngIf="title.errors?.maxlength">
+                        <p class="text-danger">Title is too large.</p>
+                    </div>
+
+                </div>
+
+                <div class="form-floating">
+                        <textarea class="form-control" name="body" formControlName="body" id="body" rows="10">                            
+                        </textarea>
+                    <label for="body">Body</label>
+
+                </div>
+
+                <div *ngIf="body.invalid && (body.dirty || body.touched)">
+
+                    <div *ngIf="body.errors?.required">
+                        <p class="text-danger">Body is required.</p>
+                    </div>
+                    <div *ngIf="body.errors?.minlength">
+                        <p class="text-danger">Body must be at least {{ body.errors?.minlength.requiredLength}}
+                            characters long.</p>
+                    </div>
+                    <div *ngIf="body.errors?.maxlength">
+                        <p class="text-danger">
+                            Body must be {{ body.errors?.maxlength.requiredLength}} characters long.
+                        </p>
+                    </div>
+                </div>
+                <button *ngIf="loading" type="submit" [disabled]="!form.valid"
+                    class="btn btn-primary btn-lg my-4">Authenticating...
+                </button>
+
+                <button *ngIf="!loading" type="submit" [disabled]="!form.valid" class="btn btn-primary btn-lg my-4">Add Post </button>
+            </form>
+        </div>
+
+    </div>
+    <div class="col-md-3"></div>
+</div>

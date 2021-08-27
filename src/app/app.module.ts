@@ -17,6 +17,8 @@ import { AuthGuard } from './services/auth-guard.service';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { AdminAuthGuard } from './services/admin-auth-guard.service';
 import { PostComponent } from './post/post.component';
+import { JwtModule } from '@auth0/angular-jwt';
+import { tokenGetter } from './jwt/jwt.config';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,14 @@ import { PostComponent } from './post/post.component';
   imports: [
     BrowserModule,
     HttpClientModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ['https://note-expressjs-api.herokuapp.com', 'http://localhost:4200'],
+        disallowedRoutes: []
+
+      }
+    }),
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule
