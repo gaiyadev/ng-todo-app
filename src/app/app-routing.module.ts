@@ -9,6 +9,7 @@ import { AdminAuthGuard } from './services/admin-auth-guard.service';
 import { AuthGuard } from './services/auth-guard.service';
 import { SigninComponent } from './signin/signin.component';
 import { SignupComponent } from './signup/signup.component';
+import { UpdatePostComponent } from './update-post/update-post.component';
 
 const routes: Routes = [
   {
@@ -36,6 +37,11 @@ const routes: Routes = [
   {
     path: 'post/add',
     component: PostComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'post/:postId',
+    component: UpdatePostComponent,
     canActivate: [AuthGuard]
   },
   {

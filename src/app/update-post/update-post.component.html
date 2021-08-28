@@ -1,4 +1,7 @@
-<div class="row">
+
+<h2 *ngIf='isLoading' class="text-center">Loading...</h2>
+
+<div class="row" *ngIf='!isLoading' >
     <div class="col-md-3"></div>
     <div class="col-md-6">
         <div class="card shadow p-3 my-5  rounded">
@@ -12,7 +15,7 @@
                 <span class="text-center">{{ successMsg }}</span>
             </div>
 
-            <form [formGroup]="form" (ngSubmit)="createPost()">
+            <form [formGroup]="form" (ngSubmit)="updatePost()">
                 <div class="form-floating mb-3">
                     <input name="title" type="text" id="title" formControlName="title" class="form-control">
                     <label for="title">Title</label>
@@ -35,7 +38,7 @@
                 </div>
 
                 <div class="form-floating">
-                        <textarea class="form-control" name="body" formControlName="body" id="body" rows="10">                            
+                    <textarea class="form-control" name="body" formControlName="body" id="body" rows="10">
                         </textarea>
                     <label for="body">Body</label>
 
@@ -57,10 +60,11 @@
                     </div>
                 </div>
                 <button *ngIf="loading" type="submit" [disabled]="!form.valid"
-                    class="btn btn-primary btn-lg my-4">Posting...
+                    class="btn btn-primary btn-lg my-4">Updating...
                 </button>
 
-                <button *ngIf="!loading" type="submit" [disabled]="!form.valid" class="btn btn-primary btn-lg my-4">Add Post </button>
+                <button *ngIf="!loading" type="submit" [disabled]="!form.valid" class="btn btn-primary btn-lg my-4">Update
+                    Post </button>
             </form>
         </div>
 

@@ -8,16 +8,19 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav  ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" routerLink="/">Home</a>
+                    <a class="nav-link" routerLinkActive="active" aria-current="page" routerLink="/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" *ngIf="authService.isSignIn() && authService.CurrentUser.admin" routerLink="/admin">Admin</a>
+                    <a class="nav-link" routerLinkActive="active" aria-current="page" *ngIf="authService.isSignIn() && authService.CurrentUser.admin" routerLink="/admin">Admin</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link"  *ngIf="!authService.isSignIn()" routerLink="/signup">Signup</a>
+                    <a class="nav-link" routerLinkActive="active" *ngIf="authService.isSignIn()" routerLink="/dashboard">Posts</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link"  *ngIf="!authService.isSignIn()" routerLink="/signin">SignIn</a>
+                    <a class="nav-link" routerLinkActive="active"  *ngIf="!authService.isSignIn()" routerLink="/signup">Signup</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLinkActive="active"  *ngIf="!authService.isSignIn()" routerLink="/signin">SignIn</a>
                 </li>  
                   <li class="nav-item">
                     <a class="nav-link" *ngIf="authService.isSignIn()" (click)='authService.signOut()' >SignOut </a>

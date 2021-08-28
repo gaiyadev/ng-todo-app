@@ -19,6 +19,7 @@ import { AdminAuthGuard } from './services/admin-auth-guard.service';
 import { PostComponent } from './post/post.component';
 import { JwtModule } from '@auth0/angular-jwt';
 import { tokenGetter } from './jwt/jwt.config';
+import { UpdatePostComponent } from './update-post/update-post.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { tokenGetter } from './jwt/jwt.config';
     DashboardComponent,
     AdminComponent,
     ForbiddenComponent,
-    PostComponent
+    PostComponent,
+    UpdatePostComponent
   ],
   imports: [
     BrowserModule,
