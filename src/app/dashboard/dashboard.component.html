@@ -42,7 +42,7 @@
                     <td> {{ post.body.slice(0, 70) + '...' }} </td>
                     <td> {{ post.createdAt| date}} </td>
                     <td> 
-                    <a href="" class="btn btn-primary ">Details</a> 
+                    <a [routerLink]="[ '/post/view',post._id]" class="btn btn-primary ">Details</a> 
                     <button class="btn btn-danger ms-1 me-1" (click)="deletePost(post._id)" > 
                        Delete </button>
                     <a [routerLink]="[ '/post',post._id]" class="btn btn-info">Update</a>

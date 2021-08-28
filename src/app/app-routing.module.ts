@@ -10,6 +10,7 @@ import { AuthGuard } from './services/auth-guard.service';
 import { SigninComponent } from './signin/signin.component';
 import { SignupComponent } from './signup/signup.component';
 import { UpdatePostComponent } from './update-post/update-post.component';
+import { ViewPostComponent } from './view-post/view-post.component';
 
 const routes: Routes = [
   {
@@ -43,6 +44,11 @@ const routes: Routes = [
     path: 'post/:postId',
     component: UpdatePostComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'post/view/:postId',
+    component: ViewPostComponent,
+    // canActivate: [AuthGuard]
   },
   {
     path: 'forbidden',

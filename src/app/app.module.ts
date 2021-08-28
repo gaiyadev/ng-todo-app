@@ -20,6 +20,7 @@ import { PostComponent } from './post/post.component';
 import { JwtModule } from '@auth0/angular-jwt';
 import { tokenGetter } from './jwt/jwt.config';
 import { UpdatePostComponent } from './update-post/update-post.component';
+import { ViewPostComponent } from './view-post/view-post.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { UpdatePostComponent } from './update-post/update-post.component';
     AdminComponent,
     ForbiddenComponent,
     PostComponent,
-    UpdatePostComponent
+    UpdatePostComponent,
+    ViewPostComponent
   ],
   imports: [
     BrowserModule,

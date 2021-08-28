@@ -16,7 +16,8 @@ import { PostService } from '../services/post.service';
 })
 export class UpdatePostComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private postService: PostService,
     private router: Router
   ) { }
@@ -101,7 +102,7 @@ export class UpdatePostComponent implements OnInit {
       this.successMsg = response.message
       setTimeout(() => {
         this.router.navigate(['/dashboard'])
-      }, 2000);
+      }, 3000);
     }, (error: AppError) => {
       this.loading = false
       switch (true) {

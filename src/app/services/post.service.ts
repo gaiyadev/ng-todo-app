@@ -184,4 +184,28 @@ export class PostService {
         })
       )
   }
+
+  // all post
+
+  fetchAllPost() {
+    return this.http.get(`${this.baseUrl}/api/notes/`)
+      .pipe(
+        catchError((error: Response | any): any => {
+          switch (true) {
+            case error.status === 404:
+              throw (new NotFoundError())
+            case error.status === 500:
+              throw (new ServerError())
+            case error.status === 0:
+              throw (new NetWorkError())
+            case error.status === 400:
+              throw (new BadRequestError(error.error.error))
+            case error.status === 401:
+              throw (new ForbiddenError(error.error.error))
+            default:
+              throw (new AppError(error))
+          }
+        })
+      )
+  }
 }
